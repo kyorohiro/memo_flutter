@@ -35,4 +35,15 @@ class DrawRectObject extends sky.RenderBox {
     sky.Rect r = new sky.Rect.fromLTWH(x, y, 25.0, 25.0);
     context.canvas.drawRect(r, p);
   }
+
+  @override
+  void performLayout() {
+    size = constraints.biggest;
+  }
+
+  @override
+  bool hitTest(sky.HitTestResult result, {sky.Offset position}) {
+    result.add(new sky.BoxHitTestEntry(this, position));
+    return true;
+  }
 }
