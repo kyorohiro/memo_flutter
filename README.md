@@ -9,3 +9,9 @@ https://github.com/google/fonts/blob/master/apache/aclonica/Aclonica.ttf
 ## Other
 https://creativecommons.org/publicdomain/zero/1.0/
 
+
+# Relate
+https://github.com/kyorohiro/memo_flutter
+
+https://github.com/kyorohiro/memo_flutter_sprites
+
