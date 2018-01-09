@@ -26,10 +26,15 @@ void main() {
   game.stage.root.addChild(new Bullet(x:400.0,y:20.0,dx:0.1,dy:0.2));
   game.stage.root.addChild(new Sun());
   game.stage.root.addChild(new Joystick());
-  game.stage.root.addChild(new Sprite("sample", "assets/sample.jpeg"));
-
+  Sprite sprite = new Sprite("sample", "assets/sample.jpeg");
+  game.stage.root.addChild(sprite);
+  sprite.rotateZ = 0.5;
   sky.runApp(game);
   game.stage.start();
+  game.stage.onTickFunc = (Stage) {
+    sprite.rotateZ +=0.1;
+    print("${sprite.centerX}");
+  };
 }
 
 class Bullet extends DisplayObject {

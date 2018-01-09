@@ -13,6 +13,7 @@ class GameWidget extends sky.SingleChildRenderObjectWidget {
 }
 
 
+typedef Stage_OnTick(Stage);
 class Stage extends sky.RenderBox {
   double get x => 0.0;
   double get y => 0.0;
@@ -24,6 +25,8 @@ class Stage extends sky.RenderBox {
   bool get animeIsStart => _animeIsStart;
   DisplayObject _root = new DisplayObject("root");
   DisplayObject get root => _root;
+
+  Stage_OnTick onTickFunc = null;
 
   int prevTimeStamp = 0;
   Future<Stage> start() async {
@@ -41,6 +44,9 @@ class Stage extends sky.RenderBox {
       if (isInit == false) {
         _root.onInit(this);
         isInit = true;
+      }
+      if(onTickFunc != null) {
+        onTickFunc(this);
       }
       _root.onTick(this);
       this.markNeedsPaint();

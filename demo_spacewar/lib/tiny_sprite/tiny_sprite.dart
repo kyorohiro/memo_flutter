@@ -20,7 +20,6 @@ void log(String message) {
   }
 }
 
-
 class ImageLoader {
   static sky.AssetBundle getAssetBundle() => (sky.rootBundle != null)
       ? sky.rootBundle
