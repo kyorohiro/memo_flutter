@@ -1,4 +1,4 @@
-part of demo;
+part of tiny_sprite;
 class GameWidget extends sky.SingleChildRenderObjectWidget {
   Stage _stage;
   Stage get stage => _stage;

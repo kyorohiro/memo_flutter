@@ -1,4 +1,4 @@
-part of demo;
+part of tiny_sprite;
 
 class DisplayObject {
   double x = 0.0;

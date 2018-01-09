@@ -1,4 +1,4 @@
-part of demo;
+part of tiny_sprite;
 class Joystick extends DisplayObject {
 
   Joystick() :super("joystick");
@@ -47,7 +47,7 @@ class Joystick extends DisplayObject {
   void onTouch(Stage stage, int id, String type) {
     TouchPoint point = stage.touchPoints[id];
     if (isTouch == false) {
-      if (distance(x, y, this.x, this.y) < minWidth) {
+      if (distance(point.x, point.y, this.x, this.y) < minWidth) {
         touchId = id;
         isTouch = true;
         this.minX = point.x;
