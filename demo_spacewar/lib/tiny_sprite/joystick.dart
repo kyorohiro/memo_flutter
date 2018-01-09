@@ -1,7 +1,7 @@
 part of tiny_sprite;
-class Joystick extends DisplayObject {
+class Joystick extends Sprite {
 
-  Joystick() :super("joystick");
+  Joystick() :super.empty("joystick");
 
   double size = 50.0;
   double minWidth = 25.0;
@@ -12,18 +12,18 @@ class Joystick extends DisplayObject {
 
   double get directionMax => size / 2;
 
-  double get directionX => x - minX;
+  double get directionX => moveX - minX;
 
-  double get directionY => y - minY;
+  double get directionY => moveY - minY;
 
   @override
   void onInit(Stage stage) {
     this.size = stage.h / 6;
     this.minWidth = this.size / 2;
-    this.x = stage.w / 2 + stage.x;
-    this.y = (stage.h - this.size) + stage.y;
-    this.minX = this.x;
-    this.minY = this.y;
+    this.moveX = stage.w / 2 + stage.x;
+    this.moveY = (stage.h - this.size) + stage.y;
+    this.minX = this.moveX;
+    this.minY = this.moveY;
   }
 
   void onRelayout(Stage stage) {
@@ -38,7 +38,7 @@ class Joystick extends DisplayObject {
     } else {
       paint.color = const sky.Color.fromARGB(0xaa, 0xff, 0xaa, 0xaa);
     }
-    sky.Rect r1 = new sky.Rect.fromLTWH(x - size / 2, y - size / 2, size, size);
+    sky.Rect r1 = new sky.Rect.fromLTWH(moveX - size / 2, moveY - size / 2, size, size);
     sky.Rect r2 = new sky.Rect.fromLTWH(
         minX - minWidth / 2, minY - minWidth / 2, minWidth, minWidth);
     stage.currentCanvas.drawOval(r1, paint);
@@ -50,7 +50,7 @@ class Joystick extends DisplayObject {
   void onTouch(Stage stage, int id, String type) {
     TouchPoint point = stage.touchPoints[id];
     if (isTouch == false) {
-      if (distance(point.x, point.y, this.x, this.y) < minWidth) {
+      if (distance(point.x, point.y, this.moveX, this.moveY) < minWidth) {
         touchId = id;
         isTouch = true;
         this.minX = point.x;
@@ -60,16 +60,16 @@ class Joystick extends DisplayObject {
       if (id == touchId) {
         if (type == "pointerup") {
           isTouch = false;
-          this.minX = this.x;
-          this.minY = this.y;
+          this.minX = this.moveX;
+          this.minY = this.moveY;
         } else {
           this.minX = point.x;
           this.minY = point.y;
-          double d = distance(this.x, this.y, this.minX, this.minY);
+          double d = distance(this.moveX, this.moveY, this.minX, this.minY);
           if (d > size / 2) {
-            double dd = abs(this.minX - this.x) + abs(this.minY - this.y);
-            this.minX = this.x + size / 2 * (this.minX - this.x) / dd;
-            this.minY = this.y + size / 2 * (this.minY - this.y) / dd;
+            double dd = abs(this.minX - this.moveX) + abs(this.minY - this.moveY);
+            this.minX = this.moveX + size / 2 * (this.minX - this.moveX) / dd;
+            this.minY = this.moveY + size / 2 * (this.minY - this.moveY) / dd;
           }
         }
       }

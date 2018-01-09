@@ -1,16 +1,14 @@
 part of tiny_sprite;
 
 class DisplayObject {
-  double x = 0.0;
-  double y = 0.0;
-  double dx = 0.0;
-  double dy = 0.0;
 
   String _objectName;
   String get objectName => _objectName;
+  sky.Matrix4 mat;
 
   DisplayObject(String objectName) {
     _objectName = objectName;
+    mat = new sky.Matrix4.zero()..setIdentity();
   }
 
   List<DisplayObject> _childs = <DisplayObject>[];

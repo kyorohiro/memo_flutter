@@ -2,9 +2,9 @@ part of tiny_sprite;
 
 class Sprite extends DisplayObject {
 
-  double scaleX = 0.2;
-  double scaleY = 0.2;
-  double scaleZ = 0.2;
+  double scaleX = 1.0;
+  double scaleY = 1.0;
+  double scaleZ = 1.0;
 
   double moveX = 0.0;
   double moveY = 0.0;
@@ -18,10 +18,16 @@ class Sprite extends DisplayObject {
   double centerY = null;
   double centerZ = null;
 
+  String _imagePath = null;
   Sprite(String name, String path):super(name){
-    mat = new sky.Matrix4.zero()..setIdentity();
+    _imagePath = path;
   }
-  sky.Matrix4 mat;
+
+  Sprite.empty(String name):super(name){
+    _imagePath = null;
+  }
+
+
   bool _isLoading = false;
   ui.Image _image = null;
   Stage _currentStage = null;
@@ -32,9 +38,12 @@ class Sprite extends DisplayObject {
   }
 
   loadImage() async {
+    if(_imagePath == null) {
+      return;
+    }
     if (_image == null && _isLoading == false) {
       _isLoading = true;
-      _image = await ImageLoader.load("assets/sample.jpeg");
+      _image = await ImageLoader.load(_imagePath);
       _isLoading = false;
       if(centerX == null) {
         centerX = _image.width/2.0;
@@ -50,22 +59,33 @@ class Sprite extends DisplayObject {
   void onPaint(Stage stage) {
     loadImage();
     sky.Paint paint = new sky.Paint()..color = new sky.Color.fromARGB(0xff, 0xff, 0xff, 0xff);
-    sky.Offset point = new sky.Offset(x, y);
+    sky.Offset point = sky.Offset.zero;
     mat.setIdentity();
     mat.translate(moveX, moveY, moveZ);
     mat.rotateX(rotateX);
     mat.rotateY(rotateY);
     mat.rotateZ(rotateZ);
     mat.scale(scaleX,scaleY,scaleZ);
-    mat.translate(-centerX, -centerY, -centerZ);
-    stage.currentCanvas.transform(mat.storage);
-    if (_image == null) {
-      sky.Rect rect = new sky.Rect.fromLTWH(x, y, 50.0, 50.0);
-      stage.currentCanvas.drawRect(rect, paint);
-    } else {
-      stage.currentCanvas.drawImage(_image, point, paint);
+    if(centerX != null)
+    {
+      mat.translate(-centerX, -centerY, -centerZ);
     }
+    stage.currentCanvas.save();
+    stage.currentCanvas.transform(mat.storage);
+    if(_imagePath != null) {
+      if (_image == null) {
+        sky.Rect rect = new sky.Rect.fromLTWH(0.0, 0.0, 50.0, 50.0);
+        stage.currentCanvas.drawRect(rect, paint);
+      } else {
+        stage.currentCanvas.drawImage(_image, point, paint);
+      }
+    }
+    onPaintAfterTransform(stage);
     stage.currentCanvas.transform((new sky.Matrix4.zero()..setIdentity()).storage);
+    stage.currentCanvas.restore();
   }
 
+  void onPaintAfterTransform(Stage stage) {
+
+  }
 }
