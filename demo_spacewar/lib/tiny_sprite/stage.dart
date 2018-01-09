@@ -1,4 +1,5 @@
 part of tiny_sprite;
+
 class GameWidget extends sky.SingleChildRenderObjectWidget {
   Stage _stage;
   Stage get stage => _stage;
@@ -11,7 +12,6 @@ class GameWidget extends sky.SingleChildRenderObjectWidget {
     return _stage;
   }
 }
-
 
 typedef Stage_OnTick(Stage);
 class Stage extends sky.RenderBox {

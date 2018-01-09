@@ -8,13 +8,6 @@ import 'package:flutter/scheduler.dart' as sky;
 
 import 'tiny_sprite/tiny_sprite.dart';
 
-bool logOn = false;//true;
-void log(String message) {
-  if(logOn) {
-    print(message);
-  }
-}
-
 void main() {
   GameWidget game = new GameWidget();
   Sun sun = new Sun();
