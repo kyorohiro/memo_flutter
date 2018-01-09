@@ -17,24 +17,44 @@ void log(String message) {
 
 void main() {
   GameWidget game = new GameWidget();
+  Sun sun = new Sun();
+  Joystick joystick =new Joystick();
+  Sprite sprite = new Sprite("sample", "assets/sample.jpeg");
+
+  game.stage.root.addChild(sun);
+  game.stage.root.addChild(joystick);
+  game.stage.root.addChild(sprite);
+  sprite.rotateZ = 0.5;
+
+  sky.runApp(game);
+  game.stage.start();
+  game.stage.onTickFunc = (Stage stage) {
+    sprite.rotateZ +=0.1;
+    print("${sprite.centerX}");
+    sun.x = stage.x + stage.w /2;
+    sun.y = stage.y + stage.h /2;
+  };
+
+
   game.stage.root.addChild(new Bullet(x:20.0,y:40.0,dx:0.0,dy:0.0));
   game.stage.root.addChild(new Bullet(x:40.0,y:20.0,dx:0.1,dy:0.3));
   game.stage.root.addChild(new Bullet(x:80.0,y:160.0,dx:0.2,dy:0.2));
   game.stage.root.addChild(new Bullet(x:160.0,y:320.0,dx:0.4,dy:0.1));
-
   game.stage.root.addChild(new Bullet(x:320.0,y:80.0,dx:0.0,dy:0.0));
   game.stage.root.addChild(new Bullet(x:400.0,y:20.0,dx:0.1,dy:0.2));
-  game.stage.root.addChild(new Sun());
-  game.stage.root.addChild(new Joystick());
-  Sprite sprite = new Sprite("sample", "assets/sample.jpeg");
-  game.stage.root.addChild(sprite);
-  sprite.rotateZ = 0.5;
-  sky.runApp(game);
-  game.stage.start();
-  game.stage.onTickFunc = (Stage) {
-    sprite.rotateZ +=0.1;
-    print("${sprite.centerX}");
-  };
+}
+
+
+
+class Sun extends DisplayObject {
+  Sun():super("sun");
+  void onPaint(Stage stage) {
+    log("Sun:onPaint()");
+    sky.Paint paint = new sky.Paint();
+    paint.color = const sky.Color.fromARGB(0xaa, 0xff, 0x77, 0x77);
+    sky.Rect r = new sky.Rect.fromLTWH(x - 15.0, y - 15.0, 30.0, 30.0);
+    stage.currentCanvas.drawOval(r, paint);
+  }
 }
 
 class Bullet extends DisplayObject {
@@ -76,26 +96,3 @@ class Bullet extends DisplayObject {
     stage.currentCanvas.drawOval(r, paint);
   }
 }
-
-class Sun extends DisplayObject {
-  double x = 100.0;
-  double y = 100.0;
-
-  Sun():super("sun");
-
-  void onTick(Stage stage) {
-    log("Sun:onTick()");
-    x = stage.x + stage.w /2;
-    y = stage.y + stage.h /2;
-  }
-
-  void onPaint(Stage stage) {
-    log("Sun:onPaint()");
-    sky.Paint paint = new sky.Paint();
-    paint.color = const sky.Color.fromARGB(0xaa, 0xff, 0x77, 0x77);
-    sky.Rect r = new sky.Rect.fromLTWH(x - 15.0, y - 15.0, 30.0, 30.0);
-    stage.currentCanvas.drawOval(r, paint);
-  }
-}
-
-
