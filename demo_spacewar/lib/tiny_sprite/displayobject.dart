@@ -8,6 +8,7 @@ class DisplayObject {
 
   String _objectName;
   String get objectName => _objectName;
+
   DisplayObject(String objectName) {
     _objectName = objectName;
   }
@@ -23,21 +24,18 @@ class DisplayObject {
   }
 
   void onInit(Stage stage) {
-    log("onInit()");
     for(DisplayObject c in _childs) {
       c.onInit(stage);
     }
   }
 
   void onPaint(Stage stage) {
-    log("onPaint()");
     for(DisplayObject c in _childs) {
       c.onPaint(stage);
     }
   }
 
   void onTouch(Stage stage, int pointer, String type) {
-    log("onTouch()");
     for(DisplayObject c in _childs) {
       c.onTouch(stage, pointer, type);
     }
@@ -46,6 +44,12 @@ class DisplayObject {
   void onTick(Stage stage) {
     for(DisplayObject c in _childs) {
       c.onTick(stage);
+    }
+  }
+
+  void onRelayout(Stage stage) {
+    for(DisplayObject c in _childs) {
+      c.onRelayout(stage);
     }
   }
 

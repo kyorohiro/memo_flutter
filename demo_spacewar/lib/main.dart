@@ -26,6 +26,7 @@ void main() {
   game.stage.root.addChild(new Bullet(x:400.0,y:20.0,dx:0.1,dy:0.2));
   game.stage.root.addChild(new Sun());
   game.stage.root.addChild(new Joystick());
+  game.stage.root.addChild(new Sprite("sample", "assets/sample.jpeg"));
 
   sky.runApp(game);
   game.stage.start();

@@ -18,13 +18,16 @@ class Joystick extends DisplayObject {
 
   @override
   void onInit(Stage stage) {
-    print("# OnInit}");
     this.size = stage.h / 6;
     this.minWidth = this.size / 2;
     this.x = stage.w / 2 + stage.x;
     this.y = (stage.h - this.size) + stage.y;
     this.minX = this.x;
     this.minY = this.y;
+  }
+
+  void onRelayout(Stage stage) {
+    onInit(stage);
   }
 
   @override

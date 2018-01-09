@@ -58,6 +58,7 @@ class Stage extends sky.RenderBox {
   @override
   void performLayout() {
     size = constraints.biggest;
+    _root.onRelayout(this);
   }
 
   @override
