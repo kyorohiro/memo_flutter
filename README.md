@@ -1,4 +1,5 @@
 # Re Learning Flutter 's memo
+move to https://github.com/kyorohiro/memo_flutter_2019
 
 Update https://github.com/kyorohiro/hello_skyengine
 
